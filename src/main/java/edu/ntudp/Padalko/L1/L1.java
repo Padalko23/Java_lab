@@ -27,33 +27,59 @@ public class L1 {
 
         displayMatrixOnScreen();
 
-        int min = findMinimumElementInMatrix();
-        System.out.println("\nMinimum element: " + min);
+        // ВИКЛИК НОВОЇ УНІВЕРСАЛЬНОЇ ФУНКЦІЇ
+        MatrixStats stats = analyzeMatrix();
 
-        int max = findMaximumElementInMatrix();
-        System.out.println("Maximum element: " + max);
-
-        double avg = calculateAverageOfAllElements();
-        System.out.printf("Average: %.2f%n", avg);
+        System.out.println("\nMinimum element: " + stats.min);
+        System.out.println("Maximum element: " + stats.max);
+        System.out.printf("Average: %.2f%n", stats.avg);
 
         scanner.close();
+    }
+
+    // Клас для збереження результатів
+    private static class MatrixStats {
+        int min;
+        int max;
+        double avg;
+
+        MatrixStats(int min, int max, double avg) {
+            this.min = min;
+            this.max = max;
+            this.avg = avg;
+        }
+    }
+
+    // --- НОВА ОБ'ЄДНАНА ФУНКЦІЯ ---
+    private static MatrixStats analyzeMatrix() {
+        int min = matrix[0][0];
+        int max = matrix[0][0];
+        int sum = 0;
+        int count = 0;
+
+        for (int[] row : matrix) {
+            for (int value : row) {
+                if (value < min) min = value;
+                if (value > max) max = value;
+                sum += value;
+                count++;
+            }
+        }
+
+        double avg = (double) sum / count;
+
+        return new MatrixStats(min, max, avg);
     }
 
     private static void inputMatrixSizeFromUser() {
         do {
             System.out.print("Enter number of rows (1-" + MAX_SIZE + "): ");
             rows = scanner.nextInt();
-            if (rows < 1 || rows > MAX_SIZE) {
-                System.out.println("Error! Number of rows must be between 1 and " + MAX_SIZE);
-            }
         } while (rows < 1 || rows > MAX_SIZE);
 
         do {
             System.out.print("Enter number of columns (1-" + MAX_SIZE + "): ");
             cols = scanner.nextInt();
-            if (cols < 1 || cols > MAX_SIZE) {
-                System.out.println("Error! Number of columns must be between 1 and " + MAX_SIZE);
-            }
         } while (cols < 1 || cols > MAX_SIZE);
 
         matrix = new int[rows][cols];
@@ -67,12 +93,7 @@ public class L1 {
             System.out.println("2 - Random generation");
             System.out.print("Your choice: ");
             choice = scanner.nextInt();
-
-            if (choice < 1 || choice > 2) {
-                System.out.println("Error! Choose 1 or 2.");
-            }
         } while (choice < 1 || choice > 2);
-
         return choice;
     }
 
@@ -89,8 +110,6 @@ public class L1 {
     private static void createMatrixWithRandomValues() {
         Random random = new Random();
         System.out.println("\nGenerating matrix randomly...");
-        System.out.println("Value range: from " + MIN_RANDOM_VALUE + " to " + MAX_RANDOM_VALUE);
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 matrix[i][j] = random.nextInt(MAX_RANDOM_VALUE - MIN_RANDOM_VALUE + 1) + MIN_RANDOM_VALUE;
@@ -100,49 +119,11 @@ public class L1 {
 
     private static void displayMatrixOnScreen() {
         System.out.println("\nMatrix:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                System.out.printf("%6d ", matrix[i][j]);
+        for (int[] row : matrix) {
+            for (int value : row) {
+                System.out.printf("%6d ", value);
             }
             System.out.println();
         }
-    }
-
-    private static int findMinimumElementInMatrix() {
-        int minimumValue = matrix[0][0];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (matrix[i][j] < minimumValue) {
-                    minimumValue = matrix[i][j];
-                }
-            }
-        }
-        return minimumValue;
-    }
-
-    private static int findMaximumElementInMatrix() {
-        int maximumValue = matrix[0][0];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (matrix[i][j] > maximumValue) {
-                    maximumValue = matrix[i][j];
-                }
-            }
-        }
-        return maximumValue;
-    }
-
-    private static double calculateAverageOfAllElements() {
-        int sum = 0;
-        int count = 0;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                sum += matrix[i][j];
-                count++;
-            }
-        }
-
-        return (double) sum / count;
     }
 }
