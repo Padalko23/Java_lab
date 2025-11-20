@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Faculty extends OrganizationalUnit {
+public class Faculty extends StructuralUnit {
     private List<Department> departments;
 
     public Faculty(String name, Human head) {

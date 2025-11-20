@@ -2,11 +2,11 @@ package edu.ntudp.Padalko.L3.model;
 
 import java.util.Objects;
 
-public abstract class OrganizationalUnit {
+public abstract class StructuralUnit {
     protected String name;
     protected Human head;
 
-    public OrganizationalUnit(String name, Human head) {
+    public StructuralUnit(String name, Human head) {
         this.name = name;
         this.head = head;
     }
@@ -14,7 +14,7 @@ public abstract class OrganizationalUnit {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        OrganizationalUnit that = (OrganizationalUnit) o;
+        StructuralUnit that = (StructuralUnit) o;
         return Objects.equals(name, that.name) && Objects.equals(head, that.head);
     }
 
