@@ -27,7 +27,6 @@ public class L1 {
 
         displayMatrixOnScreen();
 
-        // ВИКЛИК НОВОЇ УНІВЕРСАЛЬНОЇ ФУНКЦІЇ
         MatrixStats stats = analyzeMatrix();
 
         System.out.println("\nMinimum element: " + stats.min);
@@ -37,7 +36,6 @@ public class L1 {
         scanner.close();
     }
 
-    // Клас для збереження результатів
     private static class MatrixStats {
         int min;
         int max;
@@ -50,7 +48,6 @@ public class L1 {
         }
     }
 
-    // --- НОВА ОБ'ЄДНАНА ФУНКЦІЯ ---
     private static MatrixStats analyzeMatrix() {
         int min = matrix[0][0];
         int max = matrix[0][0];
